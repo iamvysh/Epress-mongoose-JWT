@@ -1,0 +1,21 @@
+
+
+const mongoose=require("mongoose")
+ 
+
+
+let adminSchema=new mongoose.Schema({
+
+        username:String,
+        email:String,
+        password:Number
+
+
+
+
+})
+
+
+let Admin=mongoose.model("Admin",adminSchema);
+
+module.exports=Admin
