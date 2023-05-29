@@ -9,6 +9,7 @@ let adminSchema=new mongoose.Schema({
         username:String,
         email:String,
         password:Number
+        
 
 
 
