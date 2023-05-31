@@ -1,4 +1,5 @@
 const express = require("express");
+const midile = require('./Schemas/adminSchema')
 
 const mongoose = require("mongoose");
 var jwt = require('jsonwebtoken');
@@ -52,7 +53,7 @@ function verifyToken(req,res,next){
 
 // register admin account
 
-app.post("/register", async (req, res) => {
+app.post("/register",async (req, res) => {
   const admin = new Admin(req.body);
   let body=req.body
 
