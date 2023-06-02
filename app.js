@@ -10,13 +10,12 @@ const User = require("./Schemas/userSchema");
 const app = express();
 const port = 3000;
 
-const url =
-  "mongodb+srv://vyshnavthaithottathil:0x7Ni0QJc12JuABS@cluster0.bhnvti1.mongodb.net/dbname";
+const url ="mongodb+srv://vyshnavthaithottathil:oWWg2g4rzTTfJI1W@cluster0.dnhevwq.mongodb.net/";
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+// oWWg2g4rzTTfJI1W
 
 // middleware fucncton for authenticaton admin
 
@@ -55,14 +54,17 @@ function verifyToken(req,res,next){
 
 app.post("/register",async (req, res) => {
   const admin = new Admin(req.body);
-  let body=req.body
+  let body=req.body.username
 
 
   try {
     const result = await admin.save();
     let token=jwt.sign(body,"secret")
-    console.log(token);
+    // console.log(token);
     res.send({auth:true,token:token,result})
+
+    let decoded_token=jwt.decode(token)
+    console.log(decoded_token)
     
   } catch (err) {
     console.log("err", err);
