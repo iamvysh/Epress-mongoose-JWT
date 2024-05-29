@@ -1,5 +1,5 @@
 const express = require("express");
-const midile = require('./Schemas/adminSchema')
+
 
 const mongoose = require("mongoose");
 var jwt = require('jsonwebtoken');
@@ -21,18 +21,42 @@ app.use(express.json());
 
 
 function verifyToken(req,res,next){
-
+   
+  //step to get token from  client     token will be in req.headers
     let authHeader=req.headers.authorization;
+    //step to throw error, while no token  in header 
     if(authHeader==undefined){
       res.status(401).send("no token provided")
     }
+     
+    //step to get only token from authHeader the variable above mentioned ,
+    //authHeader will be in the  format of `bearer khsdfvkhsdjkhvckhdskchjsh`(assume it a token)
+    //bearer is a industrial standered for passing token from client to server
+    //so we are getting a string of bearer token 
+
+
+
+    //so we need to access the token only 
+
+    
+
+//step to get token from the string `bearer khsdfvkhsdjkhvckhdskchjsh`(assume it a token)
+//we are using the javascript string methode string.split methode  to seperate bearder and token
       let token=authHeader.split(" ")[1]
+//when we apply this methode  `bearer khsdfvkhsdjkhvckhdskchjsh`   this will change into   [bearer,token]
+//so in order to get token only we need to access the value of 1 st index value
+//now the token variable that above mentioned  will be the token that generated when login
+
       jwt.verify(token,"secret",(err)=>{
         if(err){
           res.send("invalid token")
         }else{
           next()
         }
+
+        //here jwt.verify is the methode provided by jwt library to verify token from client 
+
+        //if it give a suceess result the flow of controll of program passes to next controller function
       })
     
 
@@ -59,6 +83,9 @@ app.post("/register",async (req, res) => {
 
   try {
     const result = await admin.save();
+
+
+    //the step to generate a token using jwt   here we give username as payload  
     let token=jwt.sign(body,"secret")
     // console.log(token);
     res.send({auth:true,token:token,result})
